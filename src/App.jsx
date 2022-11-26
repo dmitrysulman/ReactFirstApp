@@ -10,20 +10,24 @@ class App extends Component {
     count: 0,
     posts: [],
     loading: true,
-    comments: []
+    comments: [],
+    posts1: [
+      {id: "abc1", name: "Name1"},
+      {id: "abc2", name: "Name2"},
+      {id: "abc3", name: "Name3"}
+    ]
   }
 
   componentDidMount() {
     console.log("Mount");
     fetch("https://jsonplaceholder.typicode.com/posts")
       .then(response => response.json())
-      .then(data => this.setState({posts: data, loading: false}));
+      .then(data => this.setState({posts: data}));
 
-    this.timerId = setInterval(() => {
-      fetch("https://jsonplaceholder.typicode.com/comments")
+  
+    fetch("https://jsonplaceholder.typicode.com/comments")
       .then(response => response.json())
-      .then(data => this.setState({comments: data}))
-    }, 3000);
+      .then(data => this.setState({comments: data, loading: false}));
   }
   
   componentDidUpdate() {
@@ -32,7 +36,6 @@ class App extends Component {
 
   componentWillUnmount() {
     console.log("Unmount");
-    clearInterval(this.timerId);
   }
 
   handleClick(sign) {
@@ -53,6 +56,13 @@ class App extends Component {
     console.log("render", this.state.count);
     return (
       <div className="App" style={{width: "300px", margin: "auto"}}>
+        <div>
+          <div>{this.state.posts1.map(post => (
+            <h2 key={post.id}>{post.name}</h2>
+          ))}</div>
+          
+        </div>
+        <Timer />
         <button 
           onClick={() => this.handleClick("-")}
         >
@@ -73,7 +83,6 @@ class App extends Component {
             {this.state.posts.length} was loaded
             </h3>}
         </div>
-        <Timer />
       </div>
     );
   }
