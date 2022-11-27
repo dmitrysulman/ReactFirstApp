@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import { Timer } from "./Timer";
+import { Posts } from "./components/Posts";
 
 class App extends Component {
   constructor(props) {
@@ -18,16 +19,21 @@ class App extends Component {
     ]
   }
 
+  handleSomething = (id) => {
+    console.log("App.jsx handleSomething " + id + this.state.posts1.findIndex(post => post.id === id));
+    this.setState((prevState) => ({posts1: prevState.posts1.filter(post => post.id !== id)}));
+  } 
+
   componentDidMount() {
     console.log("Mount");
     fetch("https://jsonplaceholder.typicode.com/posts")
       .then(response => response.json())
-      .then(data => this.setState({posts: data}));
+      .then(data => this.setState((prevState) => ({posts: data})));
 
   
     fetch("https://jsonplaceholder.typicode.com/comments")
       .then(response => response.json())
-      .then(data => this.setState({comments: data, loading: false}));
+      .then(data => this.setState((prevState) => ({comments: data, loading: false})));
   }
   
   componentDidUpdate() {
@@ -40,27 +46,26 @@ class App extends Component {
 
   handleClick(sign) {
     if (sign == "+") {
-      this.setState({count: this.state.count + 1}) 
+      this.setState((prevState) => ({count: prevState.count + 1})) 
     } else if (sign == "-") {
       this.setState((prevState) => ({count: prevState.count - 1}), () => {
         console.log("minus complete")
       })
     } else {
-      this.setState({count: this.state.count + 1})
+      this.setState((prevState) => ({count: prevState.count + 1}))
     }
 
     console.log("handleClick complete")
   }
 
   render() {
-    console.log("render", this.state.count);
+    const {count, posts1, posts, loading} = this.state;
+
+    console.log("render", count);
     return (
       <div className="App" style={{width: "300px", margin: "auto"}}>
         <div>
-          <div>{this.state.posts1.map(post => (
-            <h2 key={post.id}>{post.name}</h2>
-          ))}</div>
-          
+          <Posts posts={posts1} cb={this.handleSomething}/>
         </div>
         <Timer />
         <button 
@@ -71,7 +76,7 @@ class App extends Component {
         <span 
           style={countStyle}
         >
-            {this.state.count}
+            {count}
           </span>
         <button
           onClick={() => this.handleClick()}
@@ -79,8 +84,8 @@ class App extends Component {
           +
         </button>
         <div>
-          {this.state.loading ? <h3>Loading...</h3> : <h3>
-            {this.state.posts.length} was loaded
+          {loading ? <h3>Loading...</h3> : <h3>
+            {posts.length} was loaded
             </h3>}
         </div>
       </div>
