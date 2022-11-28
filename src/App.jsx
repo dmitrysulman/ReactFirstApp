@@ -1,22 +1,23 @@
 import React, {Component} from "react";
 import { Timer } from "./Timer";
 import { Posts } from "./components/Posts";
+import { Form } from "./components/Form";
 
 class App extends Component {
   constructor(props) {
     super(props);
-  }
 
-  state = {
-    count: 0,
-    posts: [],
-    loading: true,
-    comments: [],
-    posts1: [
-      {id: "abc1", name: "Name1"},
-      {id: "abc2", name: "Name2"},
-      {id: "abc3", name: "Name3"}
-    ]
+    this.state = {
+      count: 0,
+      posts: [],
+      loading: true,
+      comments: [],
+      posts1: [
+        {id: "abc1", name: "Name1"},
+        {id: "abc2", name: "Name2"},
+        {id: "abc3", name: "Name3"}
+      ]
+    }
   }
 
   handleSomething = (id) => {
@@ -45,9 +46,9 @@ class App extends Component {
   }
 
   handleClick(sign) {
-    if (sign == "+") {
+    if (sign === "+") {
       this.setState((prevState) => ({count: prevState.count + 1})) 
-    } else if (sign == "-") {
+    } else if (sign === "-") {
       this.setState((prevState) => ({count: prevState.count - 1}), () => {
         console.log("minus complete")
       })
@@ -87,6 +88,9 @@ class App extends Component {
           {loading ? <h3>Loading...</h3> : <h3>
             {posts.length} was loaded
             </h3>}
+        </div>
+        <div>
+          <Form />
         </div>
       </div>
     );
