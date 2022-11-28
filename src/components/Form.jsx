@@ -10,6 +10,10 @@ export class Form extends Component {
             subscription: false,
             gender: '',
         }
+
+        this.firstNameRef = React.createRef();
+        this.emailRef = React.createRef();
+        
         this.handleChange = this.handleChange.bind(this);
         this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
         this.validateName = this.validateName.bind(this);
@@ -20,13 +24,20 @@ export class Form extends Component {
     }
 
     handleCheckboxChange(event) {
-        this.setState({[event.target.name]: event.target.checked});
+        this.setState(() => ({[event.target.name]: event.target.checked}), () => {
+            this.emailRef.current.focus();
+        });
     }
 
     validateName() {
         if (this.state.firstName.length < 5) {
             alert('Error!');
         }
+    }
+
+    componentDidMount() {
+        console.log(this.firstNameRef);
+        this.firstNameRef.current.focus();
     }
     
     render() {
@@ -40,6 +51,7 @@ export class Form extends Component {
                 value={firstName}
                 onChange={this.handleChange}
                 onBlur={this.validateName}
+                ref={this.firstNameRef}
             />
             <input 
                 type="text" 
@@ -47,6 +59,7 @@ export class Form extends Component {
                 placeholder="email"
                 value={email}
                 onChange={this.handleChange}
+                ref={this.emailRef}
             />
             <br />
             <select 
