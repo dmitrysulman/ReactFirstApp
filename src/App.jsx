@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import { Timer } from "./Timer";
 import { Posts } from "./components/Posts";
 import { Form } from "./components/Form";
+import { SubscriptionForm } from "./components/SubscriptionForm";
 
 class App extends Component {
   constructor(props) {
@@ -91,6 +92,10 @@ class App extends Component {
         </div>
         <div>
           <Form />
+        </div>
+        <br />
+        <div>
+          <SubscriptionForm />
         </div>
       </div>
     );
