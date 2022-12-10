@@ -31,7 +31,7 @@ export class Form extends Component {
 
     validateName() {
         if (this.state.firstName.length < 5) {
-            alert('Error!');
+            console.log('Error!');
         }
     }
 

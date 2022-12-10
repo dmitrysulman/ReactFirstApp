@@ -1,8 +1,10 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import { Timer } from "./Timer";
 import { Posts } from "./components/Posts";
 import { Form } from "./components/Form";
 import { SubscriptionForm } from "./components/SubscriptionForm";
+import { Clicker } from "./functional-components/Clicker";
+import { FTimer } from "./functional-components/FTimer";
 
 class App extends Component {
   constructor(props) {
@@ -14,30 +16,30 @@ class App extends Component {
       loading: true,
       comments: [],
       posts1: [
-        {id: "abc1", name: "Name1"},
-        {id: "abc2", name: "Name2"},
-        {id: "abc3", name: "Name3"}
+        { id: "abc1", name: "Name1" },
+        { id: "abc2", name: "Name2" },
+        { id: "abc3", name: "Name3" }
       ]
     }
   }
 
   handleSomething = (id) => {
     console.log("App.jsx handleSomething " + id + this.state.posts1.findIndex(post => post.id === id));
-    this.setState((prevState) => ({posts1: prevState.posts1.filter(post => post.id !== id)}));
-  } 
+    this.setState((prevState) => ({ posts1: prevState.posts1.filter(post => post.id !== id) }));
+  }
 
   componentDidMount() {
     console.log("Mount");
     fetch("https://jsonplaceholder.typicode.com/posts")
       .then(response => response.json())
-      .then(data => this.setState((prevState) => ({posts: data})));
+      .then(data => this.setState((prevState) => ({ posts: data })));
 
-  
+
     fetch("https://jsonplaceholder.typicode.com/comments")
       .then(response => response.json())
-      .then(data => this.setState((prevState) => ({comments: data, loading: false})));
+      .then(data => this.setState((prevState) => ({ comments: data, loading: false })));
   }
-  
+
   componentDidUpdate() {
     console.log("Update");
   }
@@ -48,38 +50,38 @@ class App extends Component {
 
   handleClick(sign) {
     if (sign === "+") {
-      this.setState((prevState) => ({count: prevState.count + 1})) 
+      this.setState((prevState) => ({ count: prevState.count + 1 }))
     } else if (sign === "-") {
-      this.setState((prevState) => ({count: prevState.count - 1}), () => {
+      this.setState((prevState) => ({ count: prevState.count - 1 }), () => {
         console.log("minus complete")
       })
     } else {
-      this.setState((prevState) => ({count: prevState.count + 1}))
+      this.setState((prevState) => ({ count: prevState.count + 1 }))
     }
 
     console.log("handleClick complete")
   }
 
   render() {
-    const {count, posts1, posts, loading} = this.state;
+    const { count, posts1, posts, loading } = this.state;
 
     console.log("render", count);
     return (
-      <div className="App" style={{width: "300px", margin: "auto"}}>
+      <div className="App" style={{ width: "300px", margin: "auto" }}>
         <div>
-          <Posts posts={posts1} cb={this.handleSomething}/>
+          <Posts posts={posts1} cb={this.handleSomething} />
         </div>
         <Timer />
-        <button 
+        <button
           onClick={() => this.handleClick("-")}
         >
           -
         </button>
-        <span 
+        <span
           style={countStyle}
         >
-            {count}
-          </span>
+          {count}
+        </span>
         <button
           onClick={() => this.handleClick()}
         >
@@ -88,7 +90,7 @@ class App extends Component {
         <div>
           {loading ? <h3>Loading...</h3> : <h3>
             {posts.length} was loaded
-            </h3>}
+          </h3>}
         </div>
         <div>
           <Form />
@@ -96,6 +98,12 @@ class App extends Component {
         <br />
         <div>
           <SubscriptionForm />
+        </div>
+        <div>
+          <Clicker />
+        </div>
+        <div>
+          <FTimer />
         </div>
       </div>
     );
