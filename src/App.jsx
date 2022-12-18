@@ -5,6 +5,8 @@ import { Form } from "./components/Form";
 import { SubscriptionForm } from "./components/SubscriptionForm";
 import { Clicker } from "./functional-components/Clicker";
 import { FTimer } from "./functional-components/FTimer";
+import { Context } from "./components/Context";
+import { Books } from "./components/Books";
 
 class App extends Component {
   constructor(props) {
@@ -67,45 +69,50 @@ class App extends Component {
 
     console.log("render", count);
     return (
-      <div className="App" style={{ width: "300px", margin: "auto" }}>
-        <div>
-          <Posts posts={posts1} cb={this.handleSomething} />
+      <Context>
+        <div className="App" style={{ width: "300px", margin: "auto" }}>
+          <div>
+            <Books />
+          </div>
+          <div>
+            <Posts posts={posts1} cb={this.handleSomething} />
+          </div>
+          <Timer />
+          <button
+            onClick={() => this.handleClick("-")}
+          >
+            -
+          </button>
+          <span
+            style={countStyle}
+          >
+            {count}
+          </span>
+          <button
+            onClick={() => this.handleClick()}
+          >
+            +
+          </button>
+          <div>
+            {loading ? <h3>Loading...</h3> : <h3>
+              {posts.length} was loaded
+            </h3>}
+          </div>
+          <div>
+            <Form />
+          </div>
+          <br />
+          <div>
+            <SubscriptionForm />
+          </div>
+          <div>
+            <Clicker />
+          </div>
+          <div>
+            <FTimer />
+          </div>
         </div>
-        <Timer />
-        <button
-          onClick={() => this.handleClick("-")}
-        >
-          -
-        </button>
-        <span
-          style={countStyle}
-        >
-          {count}
-        </span>
-        <button
-          onClick={() => this.handleClick()}
-        >
-          +
-        </button>
-        <div>
-          {loading ? <h3>Loading...</h3> : <h3>
-            {posts.length} was loaded
-          </h3>}
-        </div>
-        <div>
-          <Form />
-        </div>
-        <br />
-        <div>
-          <SubscriptionForm />
-        </div>
-        <div>
-          <Clicker />
-        </div>
-        <div>
-          <FTimer />
-        </div>
-      </div>
+      </Context>
     );
   }
 }
