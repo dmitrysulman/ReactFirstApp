@@ -7,6 +7,7 @@ import { Clicker } from "./functional-components/Clicker";
 import { FTimer } from "./functional-components/FTimer";
 import { Context } from "./components/Context";
 import { Books } from "./components/Books";
+import { FTimerReducer } from "./functional-components/FTimerReducer";
 
 class App extends Component {
   constructor(props) {
@@ -110,6 +111,9 @@ class App extends Component {
           </div>
           <div>
             <FTimer />
+          </div>
+          <div>
+            <FTimerReducer />
           </div>
         </div>
       </Context>

@@ -6,7 +6,7 @@ function initializeTimer() {
 }
 
 function FTimer() {
-    const [time, setTime] = useState(initializeTimer);
+    const [time, setTime] = useState(initializeTimer());
     const [timerStarted, setTimerStarted] = useState(false);
 
     const intervalRef = useRef();
@@ -28,7 +28,7 @@ function FTimer() {
         }
 
         return () => {
-                clearInterval(intervalRef.current);
+            clearInterval(intervalRef.current);
         }
     }, [timerStarted]);
 
